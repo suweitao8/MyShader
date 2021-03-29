@@ -307,3 +307,9 @@ void Unity_GradientNoise_float(float2 UV, float Scale, out float Out)
     fp = fp * fp * fp * (fp * (fp * 6 - 15) + 10);
     Out = lerp(lerp(d00, d01, fp.y), lerp(d10, d11, fp.y), fp.x) + 0.5;
 }
+
+// Modulo
+void Unity_Modulo_float(float A, float B, out float Out)
+{
+    Out = fmod(A, B);
+}
