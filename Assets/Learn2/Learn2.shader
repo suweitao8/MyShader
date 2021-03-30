@@ -1,72 +1,102 @@
-// Shader created with Shader Forge v1.40 
-// Shader Forge (c) Freya Holmer - http://www.acegikmo.com/shaderforge/
-// Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.40;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,cpap:True,lico:1,lgpr:1,limd:0,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:False,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:3138,x:33409,y:32740,varname:node_3138,prsc:2|emission-8333-RGB;n:type:ShaderForge.SFN_Tex2d,id:8333,x:32874,y:32686,ptovrint:False,ptlb:node_8333,ptin:_node_8333,varname:node_8333,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:bd3249e8aae01e748aaca0c062e2c19c,ntxv:0,isnm:False|UVIN-2375-OUT;n:type:ShaderForge.SFN_Tex2d,id:83,x:32098,y:32867,ptovrint:False,ptlb:node_83,ptin:_node_83,varname:node_83,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:7aad8c583ef292e48b06af0d1f2fab97,ntxv:0,isnm:False|UVIN-572-UVOUT;n:type:ShaderForge.SFN_TexCoord,id:5379,x:32137,y:32625,varname:node_5379,prsc:2,uv:0,uaff:False;n:type:ShaderForge.SFN_Add,id:2375,x:32649,y:32776,varname:node_2375,prsc:2|A-8320-UVOUT,B-2285-OUT;n:type:ShaderForge.SFN_Multiply,id:2285,x:32324,y:32906,varname:node_2285,prsc:2|A-83-R,B-3029-OUT;n:type:ShaderForge.SFN_Slider,id:3029,x:32005,y:33093,ptovrint:False,ptlb:node_3029,ptin:_node_3029,varname:node_3029,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.1638619,max:1;n:type:ShaderForge.SFN_TexCoord,id:4556,x:31659,y:32849,varname:node_4556,prsc:2,uv:0,uaff:False;n:type:ShaderForge.SFN_Panner,id:572,x:31887,y:32867,varname:node_572,prsc:2,spu:0.2,spv:0.2|UVIN-4556-UVOUT;n:type:ShaderForge.SFN_Panner,id:8320,x:32359,y:32671,varname:node_8320,prsc:2,spu:0.1,spv:0.1|UVIN-5379-UVOUT;proporder:8333-83-3029;pass:END;sub:END;*/
-
-Shader "Shader Forge/Learn2" {
-    Properties {
-        _node_8333 ("node_8333", 2D) = "white" {}
-        _node_83 ("node_83", 2D) = "white" {}
-        _node_3029 ("node_3029", Range(0, 1)) = 0.1638619
-    }
-    SubShader {
-        Tags {
-            "RenderType"="Opaque"
+﻿Shader "Unlit/Learn2"
+{
+    Properties
+    {
+        _MainTex ("Main Tex", 2D) = "white" {}
+        _OutlineWidth ("Outline Width", Range(0, 0.1)) = 0.01
+        [HDR] _OutlineColorA ("Outline Color A", Color) = (1,1,1,1)
+        [HDR] _OutlineColorB ("Outline Color B", Color) = (1,1,1,1)
         }
-        Pass {
-            Name "FORWARD"
-            Tags {
-                "LightMode"="ForwardBase"
-            }
-            
+    SubShader
+    {
+        Tags { 
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
+        }
+
+        Pass
+        {
+            Blend SrcAlpha OneMinusSrcAlpha
+            Cull Off
             
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile_instancing
+
             #include "UnityCG.cginc"
-            #pragma multi_compile_fwdbase_fullshadows
-            #pragma target 3.0
-            uniform sampler2D _node_8333; uniform float4 _node_8333_ST;
-            uniform sampler2D _node_83; uniform float4 _node_83_ST;
-            UNITY_INSTANCING_BUFFER_START( Props )
-                UNITY_DEFINE_INSTANCED_PROP( float, _node_3029)
-            UNITY_INSTANCING_BUFFER_END( Props )
-            struct VertexInput {
-                UNITY_VERTEX_INPUT_INSTANCE_ID
+            #include "Assets/ShaderGraph.cginc"
+
+            sampler2D _MainTex;
+            half4 _MainTex_ST;
+            half _OutlineWidth;
+            half3 _OutlineColorB, _OutlineColorA;
+
+            struct appdata
+            {
                 float4 vertex : POSITION;
-                float2 texcoord0 : TEXCOORD0;
+                float2 uv : TEXCOORD0;
             };
-            struct VertexOutput {
+
+            struct v2f
+            {
+                float2 uv[9] : TEXCOORD0;   // 上下左右 左上 左下 右上 右下
                 float4 pos : SV_POSITION;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-                float2 uv0 : TEXCOORD0;
             };
-            VertexOutput vert (VertexInput v) {
-                VertexOutput o = (VertexOutput)0;
-                UNITY_SETUP_INSTANCE_ID( v );
-                UNITY_TRANSFER_INSTANCE_ID( v, o );
-                o.uv0 = v.texcoord0;
-                o.pos = UnityObjectToClipPos( v.vertex );
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.uv[0] = v.uv;
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(0., _OutlineWidth), o.uv[1]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(0., -_OutlineWidth), o.uv[2]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(-_OutlineWidth, 0), o.uv[3]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(_OutlineWidth, 0.), o.uv[4]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(-_OutlineWidth, _OutlineWidth), o.uv[5]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(-_OutlineWidth, -_OutlineWidth), o.uv[6]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(_OutlineWidth, _OutlineWidth), o.uv[7]);
+                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(_OutlineWidth, -_OutlineWidth), o.uv[8]);
                 return o;
             }
-            float4 frag(VertexOutput i) : COLOR {
-                UNITY_SETUP_INSTANCE_ID( i );
-////// Lighting:
-////// Emissive:
-                float4 node_5708 = _Time;
-                float2 node_572 = (i.uv0+node_5708.g*float2(0.2,0.2));
-                float4 _node_83_var = tex2D(_node_83,TRANSFORM_TEX(node_572, _node_83));
-                float _node_3029_var = UNITY_ACCESS_INSTANCED_PROP( Props, _node_3029 );
-                float2 node_2375 = ((i.uv0+node_5708.g*float2(0.1,0.1))+(_node_83_var.r*_node_3029_var));
-                float4 _node_8333_var = tex2D(_node_8333,TRANSFORM_TEX(node_2375, _node_8333));
-                float3 emissive = _node_8333_var.rgb;
-                float3 finalColor = emissive;
-                return fixed4(finalColor,1);
+
+            half4 frag (v2f i) : SV_Target
+            {
+                half alpha, outer, time, gradient, gradientInvert;
+                half2 gradientUV;
+                half3 outerColor, outerColorA, outerColorB;
+                half4 colors[9];
+
+                colors[0] = tex2D(_MainTex, i.uv[0]);
+                colors[1] = tex2D(_MainTex, i.uv[1]);
+                colors[2] = tex2D(_MainTex, i.uv[2]);
+                colors[3] = tex2D(_MainTex, i.uv[3]);
+                colors[4] = tex2D(_MainTex, i.uv[4]);
+                colors[5] = tex2D(_MainTex, i.uv[5]);
+                colors[6] = tex2D(_MainTex, i.uv[6]);
+                colors[7] = tex2D(_MainTex, i.uv[7]);
+                colors[8] = tex2D(_MainTex, i.uv[8]);
+
+                // alpha
+                alpha = colors[1].a + colors[2].a + colors[3].a + colors[4].a + colors[5].a + colors[6].a + colors[7].a + colors[8].a;
+                alpha = saturate(alpha);    // clamp 0~1
+                outer = alpha - colors[0].a;
+
+                // 外描边颜色
+                Unity_Multiply_float(_Time.y, -0.5, time);
+                Unity_TilingAndOffset_float(i.uv[0], half2(1,1), half2(0,time), gradientUV);
+                Unity_GradientNoise_float(gradientUV, 10, gradient);
+                Unity_Multiply_float(gradient, _OutlineColorA, outerColorA);
+
+                Unity_OneMinus_float(gradient, gradientInvert);
+                Unity_Multiply_float(gradientInvert, _OutlineColorB, outerColorB);
+
+                Unity_Add_float(outerColorA, outerColorB, outerColor);
+                
+                half3 finalColor = lerp(colors[0].rgb, outerColor, outer);
+                return half4(finalColor, alpha);
             }
             ENDCG
         }
     }
-    FallBack "Diffuse"
-    CustomEditor "ShaderForgeMaterialInspector"
+    Fallback "Diffuse"
 }
