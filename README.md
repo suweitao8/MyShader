@@ -248,9 +248,21 @@ void Unity_Multiply_float (float A, float B, out float Out)
 {
     Out = A * B;
 }
+void Unity_Multiply_float (float A, float3 B, out float3 Out)
+{
+    Out = A * B;
+}
+void Unity_Multiply_float (float3 A, float B, out float3 Out)
+{
+    Out = A * B;
+}
 
 // Add
 void Unity_Add_float(float A, float B, out float Out)
+{
+    Out = A + B;
+}
+void Unity_Add_float(float3 A, float3 B, out float3 Out)
 {
     Out = A + B;
 }
@@ -312,4 +324,11 @@ void Unity_GradientNoise_float(float2 UV, float Scale, out float Out)
 void Unity_Modulo_float(float A, float B, out float Out)
 {
     Out = fmod(A, B);
+}
+
+// Saturation
+void Unity_Saturation_float(float3 In, float Saturation, out float3 Out)
+{
+    float luma = dot(In, float3(0.2126729, 0.7151522, 0.0721750));
+    Out =  luma.xxx + Saturation.xxx * (In - luma.xxx);
 }
