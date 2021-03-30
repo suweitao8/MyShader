@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.MyShader.iml
+/modules.xml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Users\su\Documents\GitHub\MyShader\.idea\.idea.MyShader\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
