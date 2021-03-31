@@ -12,11 +12,14 @@
         Tags { 
             "RenderType"="Transparent"
             "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "ForceNoShadowCasting"="True"
         }
+        Blend SrcAlpha OneMinusSrcAlpha
+        Zwrite Off
 
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
             
             CGPROGRAM

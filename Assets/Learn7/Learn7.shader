@@ -14,6 +14,7 @@
             "ForceNoShadowCasting"="True"
         }
         Blend SrcAlpha OneMinusSrcAlpha
+        Zwrite Off
 
         Pass
         {

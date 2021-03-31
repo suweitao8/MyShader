@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_SpriteTint
-  m_Shader: {fileID: 4800000, guid: 9678bb8a108828e43b569b647e0b37d7, type: 3}
+  m_Name: Unlit_Fire2D
+  m_Shader: {fileID: 4800000, guid: 02d18c568590ed94eb3704b8cec546c8, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -24,8 +24,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _TintFreq: 0.59
-    - _TintSpeed: 5
-    - _TintWait: 0
+    - _DistortionStrength: 1
+    - _FireBottomOffset: 1.54
+    - _NoiseScale: 35
+    - _UpSpeed: 0.5
     m_Colors:
-    - _TintColor: {r: 1, g: 0, b: 0, a: 1}
+    - _ElliSize: {r: 0.4, g: 0.6, b: 0.55, a: 0.8}
+    - _FireColor: {r: 0.83018863, g: 0.3930957, b: 0.18405125, a: 1}
