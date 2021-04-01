@@ -54,9 +54,9 @@
             half4 frag (v2f i) : SV_Target
             {
                 half4 col = tex2D(_MainTex, i.uv);
-                // half time = sin(_Time.y * _TintSpeed);   // -1 ~ 1
-                // half tint = smoothstep(_TintWait, _TintWait + 0.1, time);
-                col.rgb += _TintWait * _TintColor;
+                half time = sin(_Time.y * _TintSpeed);   // -1 ~ 1
+                half tint = smoothstep(_TintWait, _TintWait + 0.1, time);
+                col.rgb += tint * _TintColor;
                 return col;
             }
             ENDCG

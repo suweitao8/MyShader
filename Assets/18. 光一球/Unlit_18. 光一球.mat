@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_SpriteTint
-  m_Shader: {fileID: 4800000, guid: 9678bb8a108828e43b569b647e0b37d7, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_Name: "Unlit_18. \u5149\u4E00\u7403"
+  m_Shader: {fileID: 4800000, guid: f22dea58b891a9c47b3b180b99fa7658, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -23,9 +23,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _TintFreq: 0.59
-    - _TintSpeed: 5
-    - _TintWait: 0.884
+    m_Floats: []
     m_Colors:
-    - _TintColor: {r: 1, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
+    - _LightColor: {r: 5.992157, g: 0.9033996, b: 0, a: 1}
