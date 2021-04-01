@@ -1,3 +1,5 @@
+#define FLT_MIN  1.175494351e-38 // Minimum normalized positive floating-point number
+
 // Ellipse
 void Unity_Ellipse_float(float2 UV, float Width, float Height, out float Out)
 {
@@ -332,3 +334,59 @@ void Unity_Saturation_float(float3 In, float Saturation, out float3 Out)
     float luma = dot(In, float3(0.2126729, 0.7151522, 0.0721750));
     Out =  luma.xxx + Saturation.xxx * (In - luma.xxx);
 }
+
+// Normalize that account for vectors with zero length
+float3 SafeNormalize(float3 inVec)
+{
+    float dp3 = max(FLT_MIN, dot(inVec, inVec));
+    return inVec * rsqrt(dp3);
+}
+
+// This function does the exact inverse of TransformTangentToWorld() and is
+// also decribed within comments in mikktspace.h and it follows implicitly
+// from the scalar triple product (google it).
+float3 TransformWorldToTangent(float3 dirWS, float3x3 tangentToWorld)
+{
+    // Note matrix is in row major convention with left multiplication as it is build on the fly
+    float3 row0 = tangentToWorld[0];
+    float3 row1 = tangentToWorld[1];
+    float3 row2 = tangentToWorld[2];
+    
+    // these are the columns of the inverse matrix but scaled by the determinant
+    float3 col0 = cross(row1, row2);
+    float3 col1 = cross(row2, row0);
+    float3 col2 = cross(row0, row1);
+    
+    float determinant = dot(row0, col0);
+    float sgn = determinant<0.0 ? (-1.0) : 1.0;
+    
+    // inverse transposed but scaled by determinant
+    // Will remove transpose part by using matrix as the first arg in the mul() below
+    // this makes it the exact inverse of what TransformTangentToWorld() does.
+    float3x3 matTBN_I_T = float3x3(col0, col1, col2);
+    
+    return SafeNormalize( sgn * mul(matTBN_I_T, dirWS) );
+}
+
+// 高度转法线
+void Unity_NormalFromHeight_Tangent_float(float In, float3 Position, float3x3 TangentMatrix, out float3 Out)
+{
+    float3 worldDirivativeX = ddx(Position * 100);
+    float3 worldDirivativeY = ddy(Position * 100);
+            
+    float3 crossX = cross(TangentMatrix[2].xyz, worldDirivativeX);
+    float3 crossY = cross(TangentMatrix[2].xyz, worldDirivativeY);
+    float3 d = abs(dot(crossY, worldDirivativeX));
+    float3 inToNormal = ((((In + ddx(In)) - In) * crossY) + (((In + ddy(In)) - In) * crossX)) * sign(d);
+    inToNormal.y *= -1.0;
+            
+    Out = SafeNormalize((d * TangentMatrix[2].xyz) - inToNormal);
+    Out = TransformWorldToTangent(Out, TangentMatrix);
+}
+
+// 调整法线强度
+void Unity_NormalStrength_float(float3 In, float Strength, out float3 Out)
+{
+    Out = float3(In.rg * Strength, lerp(1, In.b, saturate(Strength)));
+}
+
