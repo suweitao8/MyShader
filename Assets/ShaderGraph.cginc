@@ -390,3 +390,8 @@ void Unity_NormalStrength_float(float3 In, float Strength, out float3 Out)
     Out = float3(In.rg * Strength, lerp(1, In.b, saturate(Strength)));
 }
 
+// 饱和度
+void Unity_Saturate_float(float In, out float Out)
+{
+    Out = saturate(In);
+}
