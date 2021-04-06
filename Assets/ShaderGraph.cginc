@@ -15,6 +15,23 @@ void Unity_Rectangle_float(float2 UV, float Width, float Height, out float Out)
     Out = saturate(min(d.x, d.y));
 }
 
+// 平滑条
+void SmoothBar(half Input, half Start, half End, half Blur, out half Out)
+{
+    half step1 = smoothstep(Start - Blur, Start + Blur, Input);
+    half step2 = smoothstep(End + Blur, End - Blur, Input);
+    Out = step1 * step2;
+}
+
+// 平滑矩形
+void SmoothRectangle(float2 UV, float Width, float Height, half Blur, out float Out)
+{
+    half bar1, bar2;
+    SmoothBar(UV.x, -Width/2.0, Width/2.0, Blur, bar1);
+    SmoothBar(UV.y, -Height/2.0, Height/2.0, Blur, bar2);
+    Out = bar1 * bar2;
+}
+
 // RoundedRectangle
 void Unity_RoundedRectangle_float(float2 UV, float Width, float Height, float Radius, out float Out)
 {

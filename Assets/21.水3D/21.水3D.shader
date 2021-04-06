@@ -79,7 +79,7 @@
                 Unity_SimpleNoise_float(i.uv + half2(_Time.y, 0), 10, noise);
                 i.grabPos.xz += half2(0.5,0) * noise;
                 float4 disColor = tex2Dproj(_GrabTex, UNITY_PROJ_COORD(i.grabPos));
-                col = col * 0.5 + depthColor * 0.3 + disColor;
+                col = col * depthColor + disColor;
                 
                 return half4(col.rgb,1);
             }
