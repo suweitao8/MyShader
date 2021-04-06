@@ -1,9 +1,7 @@
-﻿Shader "Unlit/18. 光一球"
+﻿Shader "Unlit/28.花"
 {
     Properties
     {
-        [HDR] _BaseColor ("Base Color", Color) = (1,1,1,1)
-        [HDR] _LightColor ("Color Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -16,20 +14,17 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "Assets/ShaderGraph.cginc"
-
-            half3 _BaseColor, _LightColor;
 
             struct appdata
             {
-                half4 vertex : POSITION;
-                half2 uv : TEXCOORD0;
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
             };
 
             struct v2f
             {
-                half2 uv : TEXCOORD0;
-                half4 pos : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float4 pos : SV_POSITION;
             };
 
             v2f vert (appdata v)
@@ -42,13 +37,17 @@
 
             half4 frag (v2f i) : SV_Target
             {
-                half rectangle;
-                half3 col;
+                half2 uv = i.uv;
+                uv -= 0.5; // -0.5 0.5
+                half2 polar = half2(atan2(uv.x, uv.y), length(uv));
 
-                Unity_Rectangle_half(i.uv, 1.0, 0.02, rectangle);
-                col = lerp(_BaseColor, _LightColor, rectangle);
+                uv = half2(polar.x / UNITY_TWO_PI + 0.5 + _Time.y, polar.y);
+                half x5 = uv.x * 6;
+                half m = min(frac(x5), frac(1 - x5));
+                half f = smoothstep(0, 0.01, m * 0.5 + 0.2 - uv.y);
                 
-                return half4(col, 1.0);
+                half Out = f;
+                return half4(Out, Out, Out, 1);
             }
             ENDCG
         }

@@ -51,14 +51,14 @@
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv[0] = v.uv;
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(0., _OutlineWidth), o.uv[1]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(0., -_OutlineWidth), o.uv[2]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(-_OutlineWidth, 0), o.uv[3]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(_OutlineWidth, 0.), o.uv[4]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(-_OutlineWidth, _OutlineWidth), o.uv[5]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(-_OutlineWidth, -_OutlineWidth), o.uv[6]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(_OutlineWidth, _OutlineWidth), o.uv[7]);
-                Unity_TilingAndOffset_float(v.uv, half2(1, 1), half2(_OutlineWidth, -_OutlineWidth), o.uv[8]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(0., _OutlineWidth), o.uv[1]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(0., -_OutlineWidth), o.uv[2]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(-_OutlineWidth, 0), o.uv[3]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(_OutlineWidth, 0.), o.uv[4]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(-_OutlineWidth, _OutlineWidth), o.uv[5]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(-_OutlineWidth, -_OutlineWidth), o.uv[6]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(_OutlineWidth, _OutlineWidth), o.uv[7]);
+                Unity_TilingAndOffset_half(v.uv, half2(1, 1), half2(_OutlineWidth, -_OutlineWidth), o.uv[8]);
                 return o;
             }
 
@@ -85,15 +85,15 @@
                 outer = alpha - colors[0].a;
 
                 // 外描边颜色
-                Unity_Multiply_float(_Time.y, -0.5, time);
-                Unity_TilingAndOffset_float(i.uv[0], half2(1,1), half2(0,time), gradientUV);
-                Unity_GradientNoise_float(gradientUV, 10, gradient);
-                Unity_Multiply_float(gradient, _OutlineColorA, outerColorA);
+                Unity_Multiply_half(_Time.y, -0.5, time);
+                Unity_TilingAndOffset_half(i.uv[0], half2(1,1), half2(0,time), gradientUV);
+                Unity_GradientNoise_half(gradientUV, 10, gradient);
+                Unity_Multiply_half(gradient, _OutlineColorA, outerColorA);
 
-                Unity_OneMinus_float(gradient, gradientInvert);
-                Unity_Multiply_float(gradientInvert, _OutlineColorB, outerColorB);
+                Unity_OneMinus_half(gradient, gradientInvert);
+                Unity_Multiply_half(gradientInvert, _OutlineColorB, outerColorB);
 
-                Unity_Add_float(outerColorA, outerColorB, outerColor);
+                Unity_Add_half(outerColorA, outerColorB, outerColor);
                 
                 half3 finalColor = lerp(colors[0].rgb, outerColor, outer);
                 return half4(finalColor, alpha);

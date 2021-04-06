@@ -41,7 +41,7 @@
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
-                Unity_TilingAndOffset_float(v.uv, half2(1,1), half2(0, 0.1 * _Time.y), o.noiseUV);
+                Unity_TilingAndOffset_half(v.uv, half2(1,1), half2(0, 0.1 * _Time.y), o.noiseUV);
                 return o;
             }
 
@@ -49,8 +49,8 @@
             {
                 half noise;
                 half2 uv = half2(i.uv.x, 1. - i.uv.y);
-                Unity_SimpleNoise_float(i.noiseUV, 30, noise);
-                Unity_TilingAndOffset_float(uv, half2(1,1), half2((noise - 0.5) * 0.2, 0) * uv.y, uv);
+                Unity_SimpleNoise_half(i.noiseUV, 30, noise);
+                Unity_TilingAndOffset_half(uv, half2(1,1), half2((noise - 0.5) * 0.2, 0) * uv.y, uv);
                 half3 col = tex2D(_RenderTex, uv).rgb * _Color;
                 return half4(col, 1.0);
             }

@@ -5,17 +5,14 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-public class PixelPostEffect : MonoBehaviour
+public class PostEffect : MonoBehaviour
 {
-    public int pixelCount = 50;
-    
     public Material material;
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
         if (material != null)
         {
-            material.SetInt("_PixelCount", pixelCount);
             Graphics.Blit(src, dest, material);
         }
         else

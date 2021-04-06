@@ -60,14 +60,14 @@
                 
                 col = tex2D(_MainTex, i.uv);
                 verColor = tex2D(_ProcessTex, i.uv);
-                Unity_TilingAndOffset_float(i.uv, half2(1,1), half2(-1,0), verUV2);
+                Unity_TilingAndOffset_half(i.uv, half2(1,1), half2(-1,0), verUV2);
                 verColor2 = tex2D(_ProcessTex, verUV2);
 
-                Unity_Rotate_Degrees_float(i.uv, half2(0.5, 0.5), 90, horUV);
+                Unity_Rotate_Degrees_half(i.uv, half2(0.5, 0.5), 90, horUV);
                 horColor = tex2D(_ProcessTex, horUV);
 
                 // 算求
-                Unity_Modulo_float(floor(_Process * _Segments), 2, modulo);
+                Unity_Modulo_half(floor(_Process * _Segments), 2, modulo);
 
                 procH = floor(_Process * _Segments) / _Segments;
                 stepH = step(horColor.r, procH);
@@ -75,8 +75,8 @@
                 stepH2 = step(horColor.r, procH2);
                 stepH3 = stepH2 - stepH;
 
-                Unity_Modulo_float(_Process, 1 / _Segments, procV);
-                Unity_Multiply_float(procV, _Segments, procV);
+                Unity_Modulo_half(_Process, 1 / _Segments, procV);
+                Unity_Multiply_half(procV, _Segments, procV);
                 stepV = step(verColor.r, procV);
                 stepV2 = step(verColor2.r, procV);
                 

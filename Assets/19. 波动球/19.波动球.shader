@@ -22,15 +22,15 @@
 
             struct appdata
             {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-                float3 normal : NORMAL;
+                half4 vertex : POSITION;
+                half2 uv : TEXCOORD0;
+                half3 normal : NORMAL;
             };
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
-                float4 pos : SV_POSITION;
+                half2 uv : TEXCOORD0;
+                half4 pos : SV_POSITION;
             };
 
             v2f vert (appdata v)
@@ -44,7 +44,7 @@
 
                 time = _Time.y * 0.2;
                 noiseUV = v.vertex.xy + time;
-                Unity_SimpleNoise_float(noiseUV, 10.0, noise);
+                Unity_SimpleNoise_half(noiseUV, 10.0, noise);
                 noise -= 0.5;   // 0~1 -0.5~0.5
                 
                 offset = v.normal * noise;
@@ -60,7 +60,7 @@
                 half rectangle;
                 half3 col;
 
-                Unity_Rectangle_float(i.uv, 1.0, 0.02, rectangle);
+                Unity_Rectangle_half(i.uv, 1.0, 0.02, rectangle);
                 col = lerp(_BaseColor, _LightColor, rectangle);
                 
                 return half4(col, 1.0);

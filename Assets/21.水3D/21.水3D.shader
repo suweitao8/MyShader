@@ -50,7 +50,7 @@
 
                 // 波浪
                 half noise;
-                Unity_SimpleNoise_float(v.uv, 10, noise);
+                Unity_SimpleNoise_half(v.uv, 10, noise);
                 v.vertex.y += sin(_Time.y * 3 + (v.vertex.x + v.vertex.z) * 10 + noise * 10) * 0.5;
                 
                 o.pos = UnityObjectToClipPos(v.vertex);
@@ -76,7 +76,7 @@
 
                 // 折射
                 half noise;
-                Unity_SimpleNoise_float(i.uv + half2(_Time.y, 0), 10, noise);
+                Unity_SimpleNoise_half(i.uv + half2(_Time.y, 0), 10, noise);
                 i.grabPos.xz += half2(0.5,0) * noise;
                 float4 disColor = tex2Dproj(_GrabTex, UNITY_PROJ_COORD(i.grabPos));
                 col = col * depthColor + disColor;

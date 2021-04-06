@@ -1,9 +1,11 @@
-﻿Shader "Unlit/25.FlowLight"
+﻿Shader "Unlit/27.扭曲消失"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Offset ("Offset", Range(-1, 1)) = 0
+        _Center ("Center", Vector) = (0.5, 0.5, 0, 0)
+        _Strength ("Strength", float) = 1
+        _Process ("Process", Range(0,1)) = 0
     }
     SubShader
     {
@@ -16,6 +18,7 @@
         Blend SrcAlpha OneMinusSrcAlpha
         Zwrite Off
 
+
         Pass
         {
             CGPROGRAM
@@ -27,7 +30,8 @@
 
             sampler2D _MainTex;
             half4 _MainTex_ST;
-            half _Offset;
+            half3 _Center;
+            half _Strength, _Process;
 
             struct appdata
             {
@@ -38,8 +42,8 @@
             struct v2f
             {
                 half2 uv : TEXCOORD0;
-                half2 rectUV : TEXCOORD1;
                 half4 pos : SV_POSITION;
+                half4 posWS : TEXCOORD1;
             };
 
             v2f vert (appdata v)
@@ -47,29 +51,20 @@
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                
-                Unity_Rotate_Degrees_half(v.uv, half2(0.5,0.5), 45, o.rectUV);
-                o.rectUV += half2(0, _Offset * 1 - 0.5);
+                o.posWS.xy = mul(unity_ObjectToWorld, v.vertex).xy;
+                o.posWS.zw = mul(unity_ObjectToWorld, _Center).zw;
                 return o;
-            }
-
-            void MyRect(half2 uv, half height, out half Out)
-            {
-                half blur = 0.05;
-                half start = smoothstep(-height - blur, -height + blur, uv.y);
-                half end = smoothstep(height + blur, height - blur, uv.y);
-                Out = start * end;
             }
 
             half4 frag (v2f i) : SV_Target
             {
+                half twirl;
+                half2 twirlUV;
                 half4 col = tex2D(_MainTex, i.uv);
-                half rectangle;
-
-                MyRect(i.rectUV, 0.1, rectangle);
-                
-                col.rgb += rectangle * 0.5;
-                
+                Unity_Twirl_half(i.posWS.xy, _Center.xy, _Strength, half2(0,0), twirlUV);
+                Unity_SimpleNoise_half(twirlUV, 1.0, twirl);
+                twirl = smoothstep(_Process - 0.1, _Process, twirl);
+                col.a = col.a * twirl;
                 return col;
             }
             ENDCG

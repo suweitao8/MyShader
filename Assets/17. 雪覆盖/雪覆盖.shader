@@ -69,8 +69,8 @@
                 ndotl = dot(i.nDirWS, lDir);
                 half shadow = LIGHT_ATTENUATION(i);
                 
-                Unity_SimpleNoise_float(noiseUV, 100.0, noise1);
-                Unity_GradientNoise_float(noiseUV, 0.5, noise2);
+                Unity_SimpleNoise_half(noiseUV, 100.0, noise1);
+                Unity_GradientNoise_half(noiseUV, 0.5, noise2);
                 noise = noise1 * noise2;
                 noise = saturate(noise + 0.5) * i.nDirWS.y;
                 

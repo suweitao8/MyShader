@@ -55,7 +55,7 @@
             half4 frag (v2f i) : SV_Target
             {
                 half4 col = tex2D(_MainTex, i.uv) * _Color;
-                Unity_Saturation_float(col.rgb, _Saturation, col.rgb);
+                Unity_Saturation_half(col.rgb, _Saturation, col.rgb);
                 return col;
             }
             ENDCG

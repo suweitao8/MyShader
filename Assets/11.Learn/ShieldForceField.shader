@@ -49,8 +49,8 @@
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 half2 uv = TRANSFORM_TEX(v.uv, _MainTex);
-                Unity_TilingAndOffset_float(uv, half2(1,1), half2(0, -_Time.x), o.uv);
-                Unity_TilingAndOffset_float(uv, half2(1,1), half2(0, -_Time.y), o.uvGlow);
+                Unity_TilingAndOffset_half(uv, half2(1,1), half2(0, -_Time.x), o.uv);
+                Unity_TilingAndOffset_half(uv, half2(1,1), half2(0, -_Time.y), o.uvGlow);
                 return o;
             }
 
