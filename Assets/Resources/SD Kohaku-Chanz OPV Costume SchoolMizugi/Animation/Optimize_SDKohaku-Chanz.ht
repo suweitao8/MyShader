@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1105 &110500000
+HumanTemplate:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Optimize_SDKohaku-Chanz
+  m_BoneTemplate:
+    Chest: Character1_Spine2
+    Head: Character1_Head
+    Hips: Character1_Hips
+    Left Index Intermediate: Character1_LeftHandIndex2
+    Left Index Proximal: Character1_LeftHandIndex1
+    Left Little Intermediate: Character1_LeftHandPinky2
+    Left Little Proximal: Character1_LeftHandPinky1
+    Left Middle Intermediate: Character1_LeftHandMiddle2
+    Left Middle Proximal: Character1_LeftHandMiddle1
+    Left Ring Intermediate: Character1_LeftHandRing2
+    Left Ring Proximal: Character1_LeftHandRing1
+    Left Thumb Distal: Character1_LeftHandThumb3
+    Left Thumb Intermediate: Character1_LeftHandThumb2
+    Left Thumb Proximal: Character1_LeftHandThumb1
+    LeftEye: bone_eye_L
+    LeftFoot: Character1_LeftFoot
+    LeftHand: Character1_LeftHand
+    LeftLowerArm: Character1_LeftForeArm
+    LeftLowerLeg: Character1_LeftLeg
+    LeftShoulder: Character1_LeftShoulder
+    LeftUpperArm: Character1_LeftArm
+    LeftUpperLeg: Character1_LeftUpLeg
+    Neck: Character1_Neck
+    Right Index Intermediate: Character1_RightHandIndex2
+    Right Index Proximal: Character1_RightHandIndex1
+    Right Little Intermediate: Character1_RightHandPinky2
+    Right Little Proximal: Character1_RightHandPinky1
+    Right Middle Intermediate: Character1_RightHandMiddle2
+    Right Middle Proximal: Character1_RightHandMiddle1
+    Right Ring Intermediate: Character1_RightHandRing2
+    Right Ring Proximal: Character1_RightHandRing1
+    Right Thumb Distal: Character1_RightHandThumb3
+    Right Thumb Intermediate: Character1_RightHandThumb2
+    Right Thumb Proximal: Character1_RightHandThumb1
+    RightEye: bone_eye_R
+    RightFoot: Character1_RightFoot
+    RightHand: Character1_RightHand
+    RightLowerArm: Character1_RightForeArm
+    RightLowerLeg: Character1_RightLeg
+    RightShoulder: Character1_RightShoulder
+    RightUpperArm: Character1_RightArm
+    RightUpperLeg: Character1_RightUpLeg
+    Spine: Character1_Spine

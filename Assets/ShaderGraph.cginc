@@ -7,6 +7,14 @@ void Unity_Ellipse_half(half2 UV, half Width, half Height, out half Out)
     Out = saturate((1 - d) / fwidth(d));
 }
 
+// 平滑圆
+void SmoothCircle(half2 UV, half Radius, half Blur, out half Out)
+{
+    half2 uv = UV - 0.5;
+    
+    Out = smoothstep(Radius, Radius - Blur, length(uv));
+}
+
 // Rectangle
 void Unity_Rectangle_half(half2 UV, half Width, half Height, out half Out)
 {
