@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_25.FlowLight
-  m_Shader: {fileID: 4800000, guid: 0acf7c603cf5f22459377781dde57149, type: 3}
+  m_Name: Unlit_31.Mandelbrot
+  m_Shader: {fileID: 4800000, guid: 06ddd7237a2240943ab5164b8afc9330, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -24,7 +24,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Int: 1
-    - _Offset: 0.07
+    - _Angle: 9
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _Area: {r: 0, g: 0, b: 4, a: 4}

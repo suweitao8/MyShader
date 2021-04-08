@@ -12,7 +12,7 @@ void SmoothCircle(half2 UV, half Radius, half Blur, out half Out)
 {
     half2 uv = UV - 0.5;
     
-    Out = smoothstep(Radius, Radius - Blur, length(uv));
+    Out = smoothstep(Radius, Radius + Blur, length(uv));
 }
 
 // Rectangle
