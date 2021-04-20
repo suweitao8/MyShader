@@ -42,6 +42,8 @@
 
             float CubeDis(float3 p, float3 size)
             {
+                p = abs(p)-size;
+	            return length(max(p, 0.))+min(max(p.x, max(p.y, p.z)), 0.);
                 return length(max(abs(p) - size, 0.0));
             }
             
@@ -49,7 +51,7 @@
             {
                 float3 rp = p;
                 rp.xz = mul(RotationByAngle(_Time.y), rp.xz);
-                float cube = CubeDis(rp, float3(0.1, 1, 0.5));
+                float cube = DistanceByCube(p, float3(0,1,0), float3(0.1, 1, 0.5));
 
                 float3 spA = p;
                 spA -= float3(0, 1, 0);
@@ -59,7 +61,7 @@
                 float sd = smoothmin(sdA, sdB, 0.1);
                 
                 float result = min(cube, p.y + 0.5);
-                result = min(sd, result);
+                result = min(cube, p.y + 0.5);
                 return result;
             }
 

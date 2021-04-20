@@ -451,7 +451,38 @@ float DistanceBySphere(float3 p, float4 sphere)
 // size 大小
 float DistanceByCube(float3 p, float3 center, float3 size)
 {
-    return length(max(abs(p - center) - size, 0.0));
+    p -= center;
+    p = abs(p)-size;
+    return length(max(p, 0.)) +
+        min(max(p.x, max(p.y, p.z)), 0.);
+}
+
+float DistanceByCube(float2 p, float2 center, float2 size)
+{
+    p -= center;
+    p = abs(p)-size;
+    return length(max(p, 0.)) +
+        min(max(p.x, p.y), 0.);
+}
+
+// 高度
+float DistanceByPlane(float3 p, float height)
+{
+    return p.y - height;
+}
+
+// 陀螺
+float DistanceByGyroid(float3 p,
+    float scale,
+    float thickness,
+    float bias)
+{
+    float3 gp = p * scale;
+    float result =
+        abs(dot(sin(gp), cos(gp.zxy)) - bias)
+        / scale - thickness;
+    result *= 0.8;
+    return result;
 }
 
 // 胶囊
@@ -503,7 +534,7 @@ float RaycastDemo(float3 ro, float3 rd)
         float3 p = ro + rd * d;
         float dS = DistanceBySphere(p, sphere);
         d += dS;
-        if (d > RAY_MAX_DIST || d < RAY_SUF_DIST) break;
+        if (d > RAY_MAX_DIST || abs(d) < RAY_SUF_DIST) break;
     }
     return d;
 }
